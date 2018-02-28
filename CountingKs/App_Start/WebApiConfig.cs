@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using CountingKs.Filters;
 using Newtonsoft.Json.Serialization;
 
 namespace CountingKs
@@ -29,6 +30,18 @@ namespace CountingKs
                 defaults: new { controller = "Diaries", diaryid = RouteParameter.Optional }
             );
 
+            config.Routes.MapHttpRoute(
+                name: "DiaryEntries",
+                routeTemplate: "api/user/diaries/{diaryid}/entries/{id}",
+                defaults: new { controller = "DiaryEntries", id= RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "DiarySummary",
+                routeTemplate: "api/user/diaries/{diaryid}/summary",
+                defaults: new { controller = "DiarySummary" }
+            );
+
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.
             // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.
             // For more information, visit http://go.microsoft.com/fwlink/?LinkId=279712.
@@ -37,6 +50,14 @@ namespace CountingKs
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            // Add support for JSONP
+            //var formatter = new JsonpMediaTypeFormatter(jsonFormatter);
+            //config.Formatters.Insert(0, formatter);
+
+#if !DEBUG
+            config.Filters.Add(new RequireHttpsAttribute());
+#endif
         }
     }
 }
