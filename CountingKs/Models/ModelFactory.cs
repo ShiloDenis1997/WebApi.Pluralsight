@@ -39,6 +39,25 @@ namespace CountingKs.Models
             };
         }
 
+        public MeasureV2Model Create2(Measure measure)
+        {
+            return new MeasureV2Model
+            {
+                Url = _urlHelper.Link("Measures", new { foodid = measure.Food.Id, id = measure.Id }),
+                Description = measure.Description,
+                Calories = measure.Calories,
+                Carbohydrates = measure.Carbohydrates,
+                Cholestrol = measure.Cholestrol,
+                Fiber = measure.Fiber,
+                Iron = measure.Iron,
+                Protein = measure.Protein,
+                SaturatedFat = measure.SaturatedFat,
+                Sodium = measure.Sodium,
+                Sugar = measure.Sugar,
+                TotalFat = measure.TotalFat
+            };
+        }
+
         public DiaryModel Create(Diary diary)
         {
             return new DiaryModel
@@ -95,6 +114,15 @@ namespace CountingKs.Models
             {
                 DiaryDate = diary.CurrentDate,
                 TotalCalories = Math.Round(diary.Entries.Sum(e => e.Measure.Calories * e.Quantity))
+            };
+        }
+
+        public AuthTokenModel Create(AuthToken authToken)
+        {
+            return new AuthTokenModel
+            {
+                Token = authToken.Token,
+                Expiration = authToken.Expiration
             };
         }
     }

@@ -1,4 +1,5 @@
 using System.Web.Http;
+using System.Web.Http.Filters;
 using CountingKs.Data;
 using CountingKs.Models;
 using CountingKs.Services;
@@ -53,6 +54,7 @@ namespace CountingKs.App_Start
 
                 //API support
                 GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
+                GlobalConfiguration.Configuration.Services.Add(typeof(IFilterProvider), new NinjectWebApiFilterProvider(kernel));
 
                 RegisterServices(kernel);
                 return kernel;

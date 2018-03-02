@@ -4,10 +4,12 @@ using System.Linq;
 using System.Web.Http.Routing;
 using CountingKs.Data;
 using CountingKs.Data.Entities;
+using CountingKs.Filters;
 using CountingKs.Models;
 
 namespace CountingKs.Controllers
 {
+    [CountingKsAuthorize(perUser:false)]
     public class FoodsController : BaseApiController
     {
         private const int PAGE_SIZE = 50;

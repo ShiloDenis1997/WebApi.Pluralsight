@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace CountingKs.Data.Entities
-{
+{   
   public class Measure
   {
     public int Id { get; set; }
